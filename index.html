@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WalkMod</title>
+  <meta name="description" content="Open Source Tool to automatically reduce technical debt by fixing PMD, CheckStyle or SonarQube issues" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Loading Bootstrap -->
+  <link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Loading Flat UI -->
+  <link href="css/flat-ui.css" rel="stylesheet">
+  <link href="docs/assets/css/demo.css" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+  <link rel="stylesheet" href="codemirror/theme/zenburn.css">
+  <link rel="stylesheet"
+  href="codemirror/addon/hint/show-hint.css">
+
+
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+  <!--[if lt IE 9]>
+  <script src="/js/vendor/html5shiv.js"></script>
+  <script src="/js/vendor/respond.min.js"></script>
+  <![endif]-->
+  
+  <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js',
+            'ga');
+
+    ga('create', 'UA-43600294-1', 'auto');
+    
+    ga('send', 'pageview');
+    
+   
+</script>
+</head>
+<body>
+<style>
+
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
+.banner{
+  background-color:#1abc9c;
+  padding-top: 15px;
+  margin-top:50px;
+  font-size:14px;
+}
+
+.title{
+  background-color:#34495e;
+  color:white;
+  padding-top: 0px;
+  margin-top:50px;
+  margin-bottom:50px;
+}
+
+.contact{
+  background-color:#34495e;
+  color:white;
+  padding-bottom:50px;
+}
+
+@media (max-width: 767px) {
+    .demo-logo .logo {
+        background-size: 300px 234px;
+        width: 300px;
+   }
+   
+  
+   .footer-banner {
+        margin-left: 0px; 
+   }
+
+   
+}
+</style>
+
+<!-- Static navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <a class="navbar-brand" href="/" style="font-family: ubuntu-titletitle; font-size: 30px;">WalkMod</a>
+    </div>
+    <div class="navbar-collapse collapse">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#integration">Integration</a></li>
+        <li><a href="#contribute">Contribute</a></li>
+        <li><a href="#workrecognition">Talks</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://blog.walkmod.com">Blog</a></li>
+      
+
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div class="container">
+  <div class="demo-headline">
+    <h1 class="demo-logo" style="font-family: ubuntu-titletitle; font-size: 100px;">
+      <div class="logo"></div>
+      WalkMod
+      <small>Open Source Tool to Fix Java Coding Style Issues</small>
+
+    </h1>
+
+    <div class="row demo-row">
+      <div class="col-md-6 hidden-xs">
+        <a rel="nofollow" onclick="ga('send', 'event', 'download', 'download'); return true;" 
+            href="https://bitbucket.org/rpau/walkmod/downloads/walkmod-3.0.0-installer.zip"
+            type="application/x-zip-compressed" class="btn btn-block btn-lg btn-primary">Download</a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="title">
+  <div class="banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-xs-12" style="margin-bottom: 30px;">
+
+          <span style="font-size:18px;">Original
+            code:</span>
+            <form action="">
+              <textarea id="java-code-original" rows="12" style="width: 100%"
+              placeholder="//Paste quality Java code here">
+import java.io.InputStream;
+import java.util.LinkedList;
+
+public class Calculator {
+
+  private double total = 0, zero=0;
+  private void reset(){total = 0;}
+  public int getTotal(){return total;}
+  public void sum(double value){total+=value;}
+  public void pow(double value) {
+    /*
+    for (int i = 0; i < value; i++) {
+      multiply(value);
+    }*/
+    total = Math.pow(total, value);
+    System.out.println("The pow is "+total);
+  }}
+              </textarea>
+            </form>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <span style="font-size:18px;">...
+              and after running it:</span>
+              <textarea id="java-code-final" rows="12" style="width: 100%">public class Calculator {
+
+  private double total = 0;
+
+  public int getTotal(){
+    return total;
+  }
+
+  public void pow(double value) {
+    total = Math.pow(total, value);
+  }
+
+  public void sum(double value) {
+    total = total + value;
+  }
+
+}
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  <section id="installation">
+      <div class="container"><h1 >Installation</h1></div>
+      </div>
+      <div class="container">
+        <h4>From Binary distribution</h4>
+        The only requirement is the Java Virtual Machine (equal or greater than 1.7).
+    
+        <ol>
+          <li>Download and unzip the <a rel="nofollow"
+            href="https://bitbucket.org/rpau/walkmod/downloads/walkmod-3.0.0-installer.zip"
+            type="application/x-zip-compressed"
+            onclick="ga('send', 'event', 'download', 'download'); return true;" >walkmod-3.0.0-installer.zip</a> to
+            the directory you wish to install walkmod <code>WALKMOD_HOME</code>.
+          </li>
+          <li>Add <code>WALKMOD_HOME/bin</code> folder to
+            your <code>PATH</code> environment variable.
+          </li>
+          <li>Open a prompt and type<code> walkmod --version</code>. It
+            should print out your installed version of walkmod, for example: <pre
+            style="margin-top: 5px;">Walkmod version "3.0"
+Java version: 1.8.0_101
+Java Home: /Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home/jre
+OS: Mac OS X, Version: 10.12.2</pre>
+          </li>
+        </ol>
+        Alternatively, Mac OS users can also install walkmod from HomeBrew
+        <code>brew install walkmod</code>
+      </div>
+  </section>
+  <section id="usage">
+      <div class="title">
+        <div class="container"><h1>Usage</h1></div>
+      </div>
+      <div class="container">
+        <p>WalkMod started as a framework to write code transformations. However, most of the users look for quick fixes
+          for existing static code analysis tools. Here appear the commands to get the results.</p>
+          <div>
+            <h4>For PMD</h4>
+            <pre>walkmod apply pmd</pre>
+          </div>
+          <div>
+            <h4>For CheckStyle</h4>
+            <pre>walkmod apply checkstyle</pre>
+          </div>
+          <div>
+            <h4>For SonarQube</h4>
+            <pre>walkmod apply -DauthToken="THIS_IS_MY_TOKEN" -DsonarHost="https://sonarqube.com" sonar</pre>
+          </div>
+    
+          <p>If you want to learn how to use more complex code transformations through a fixed configuration (<code>walkmod.xml</code>), read our documentation.
+          </p>
+          <div class="row demo-row">
+           <div class="col-xs-6">
+                <a href="docs.html" onclick="ga('send', 'event', 'docs', 'view'); return true;" class="btn btn-block btn-lg btn-primary">Go to Documentation</a>
+              </div>
+          </div>
+      </div>
+  </section>
+  <section id="integration">
+      <div class="title">
+        <div class="container"><h1>Integration</h1></div>
+      </div>
+      <div class="container">
+        <h2>Maven</h2>
+        You can run WalkMod in your build process (PMD, CheckStyle or SonarQube) by adding the following <a href="https://github.com/walkmod/maven-walkmod-plugin">Maven WalkMod plugin</a> in
+        your <code>pom.xml</code>. This example, shows you how to apply quick fixes for PMD using Maven.
+        <pre>
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.walkmod.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;walkmod-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;1.0.3&lt;/version&gt;
+            &lt;executions&gt;
+              &lt;execution&gt;
+                &lt;phase&gt;generate-sources&lt;/phase&gt;
+                &lt;goals&gt;
+                  &lt;goal&gt;apply&lt;/goal&gt;
+                &lt;/goals&gt;
+                &lt;configuration&gt;
+                  &lt;chains&gt;pmd&lt;/chains&gt;
+                  &lt;properties&gt;configurationFile=rulesets/java/basic.xml&lt;/properties&gt;
+                &lt;/configuration&gt;
+              &lt;/execution&gt;
+            &lt;/executions&gt;
+          &lt;/plugin&gt;
+        </pre>
+        And run
+        <pre>
+          mvn package
+        </pre>
+        <p>In order set your custom configuration parameters, visit the official plugin site</p>
+        <a href="https://github.com/walkmod/maven-walkmod-plugin" class="pull-right btn  btn-lg btn-primary">
+          Visit Maven Plugin Site</a>
+    
+      </div>
+      <div class="container">
+        <h2>Gradle</h2>
+        You can also run WalkMod in your gradle project by adding the following <a href="https://github.com/walkmod/gradle-walkmod-plugin">Gradle WalkMod plugin</a> in
+        your <code>build.gradle</code>. This example, shows you how to apply quick fixes for PMD using Gradle.
+        <pre>buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.walkmod:gradle-walkmod-plugin:0.0.1'
+    }
+}
+apply plugin: 'walkmod'
+walkmod {
+  chains = [ 'pmd' ]
+}
+          </pre>
+        And run
+        <pre>
+            gradle walkmodApply
+          </pre>
+        <p>In order set your custom configuration parameters, visit the official plugin site</p>
+        <a href="https://github.com/walkmod/gradle-walkmod-plugin" class="pull-right btn  btn-lg btn-primary">
+          Visit Gradle Plugin Site</a>
+
+      </div>
+  </section>
+  <section id="contribute">
+        <div class="title">
+          <div class="container"><h1>Contribute</h1></div>
+        </div>
+        <div class="container">
+
+          <div class="row" >
+            <div class="col-md-9 col-xs-12">
+              <p>
+              You can easily contribute, by starring or forking our <a href="https://github.com/walkmod/walkmod-core" target="_blank">GitHub repository</a>. </p>
+              <p style="text-align:center">
+                <iframe src="http://ghbtns.com/github-btn.html?user=walkmod&amp;repo=walkmod-core&amp;type=watch&amp;count=true" height="20" width="90" frameborder="0" scrolling="0" style="height: 20px;" allowtransparency="true"></iframe>
+                  <iframe src="http://ghbtns.com/github-btn.html?user=walkmod&amp;repo=walkmod-core&amp;type=fork&amp;count=true" height="20" width="90" frameborder="0" scrolling="0" style="height: 20px;" allowtransparency="true"></iframe>
+                
+              </p>
+              
+                
+              
+              <p>If you would like to add new quick fix is for an specific static code analysis rule (e.g PMD, CheckStyle, SonarQube),
+                follow the next steps:</p>
+
+                <ol>
+                  <li>Go to our <a href="https://github.com/walkmod">GitHub</a> and look for the plugin, where you
+                    want to contribute. For example, if you want to contribute to PMD, look for walkmod-pmd-plugin.
+                  </li>
+                  <li>For the repository and apply your contributions</li>
+                  <li>Send us a pull request</li>
+                </ol>
+
+                <p>We also provide <b>professional services</b> to add more quick fixes to our tool.</p>
+                <a href="https://github.com/walkmod" class="pull-right btn  btn-lg btn-primary">Go to WalkMod Plugins</a>
+
+
+              </div>
+              <div class="col-md-3 hidden-xs">
+                <embed src="img/icons/svg/idea-1.svg" type="image/svg+xml" height="350"
+                style="margin-top:40px;"></embed>
+              </div>
+            </div>
+          </div>
+  </section>
+  <section id="workrecognition">
+          <div class="title">
+            <div class="container"><h1>Work recognition</h1></div>
+          </div>
+
+          <div class="container">
+            <div class="row" >
+              <div class="col-xs-12" style="text-align: center;">
+                <embed src="img/oracle.svg" type="image/svg+xml" class="img-thumbnail"
+                style="margin: 10px;" height="50"></embed>
+
+                <embed src="img/devoxx.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/jbcnconf.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/dzone.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/thoughtworks.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/metricstream.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/arquillian.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/esadecreapolis.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/barcelonajug.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+
+                <embed src="img/voxxeddays.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+               
+                <embed src="img/hackernews.svg" type="image/svg+xml" class="img-thumbnail" height="50"
+                style="margin: 10px;"></embed>
+              </div>
+            </div>
+
+          </div>
+  </section>
+  <section id="contact">
+          <div class="contact">
+              <div class="container">
+            If you want to contact us, send us an <a href="mailto:rpau@walkmod.com">email</a>
+              </div>
+          </div>
+    </section>
+    </div>
+          <!-- /.container -->
+          <footer>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-7 col-xs-12">
+                <a class="footer-brand" href="http://walkmod.com" target="_blank"
+                  style="font-family: ubuntu-titletitle; font-size: 30px;">WalkMod
+                </a>
+              </div> <!-- /col-xs-7 -->
+            </div>
+          </div>
+        </footer>
+
+        <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+        <script src="js/bootstrap.min.js"></script>
+
+        <script src="codemirror/lib/codemirror.js"></script>
+        <script src="codemirror/addon/edit/matchbrackets.js"></script>
+        <script src="codemirror/addon/hint/show-hint.js"></script>
+        <script src="codemirror/mode/clike/clike.js"></script>
+        <script src="js/codemirror.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/vendor/video.js"></script>
+        <script src="js/flat-ui.min.js"></script>
+
+      </body>
+      </html>
